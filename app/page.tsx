@@ -77,19 +77,17 @@ export default function Home() {
             >
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
-            </Button>
-            <Button
+            </Button>            <Button
               variant="ghost"
               size="icon"
               onClick={() => handleExternalLink("https://www.kaggle.com/mhmdkardosha")}
-              className="hover:text-[#1a4b8c]"
-            >
-              <Image
+              className="hover:text-[#1a4b8c] flex items-center justify-center"
+            ><Image
                 src="/icons/kaggle.svg"
                 alt="Kaggle"
                 width={24}
                 height={24}
-                className="h-6 w-6 translate-y-1"
+                className="h-10 w-10"
               />
               <span className="sr-only">Kaggle</span>
             </Button>            <Button
@@ -304,18 +302,17 @@ export default function Home() {
             >
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
-            </Button>
-            <Button
+            </Button>            <Button
               variant="ghost"
               size="icon"
               onClick={() => handleExternalLink("https://www.kaggle.com/mhmdkardosha")}
-              className="text-white hover:text-[#d4a84f] hover:bg-transparent"
+              className="text-white hover:text-[#d4a84f] hover:bg-transparent flex items-center justify-center"
             ><Image
                 src="/icons/kaggle.svg"
                 alt="Kaggle"
-                width={48}
-                height={48}
-                className="h-12 w-12 translate-y-1 invert brightness-0 filter"
+                width={24}
+                height={24}
+                className="h-10 w-10 invert brightness-0 filter"
               />
               <span className="sr-only">Kaggle</span>
             </Button>
