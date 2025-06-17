@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -26,12 +27,13 @@ export function ProjectCard({
 }: ProjectCardProps) {
   return (
     <Card className="overflow-hidden flex flex-col h-full transition-all hover:shadow-lg border-t-4 border-t-[#d4a84f] bg-[#f8f5f0]">
-      <div className="aspect-video overflow-hidden">
-        <img
-          src={image || "/placeholder.svg"}
-          alt={`${title} project thumbnail`}
-          className="w-full h-full object-cover transition-transform hover:scale-105"
-        />
+      <div className="aspect-video overflow-hidden">        <Image
+        src={image || "/placeholder.svg"}
+        alt={`${title} project thumbnail`}
+        className="w-full h-full object-cover transition-transform hover:scale-105"
+        width={400}
+        height={200}
+      />
       </div>
       <CardHeader>
         <h3 className="text-xl font-semibold text-[#1a2a47]">{title}</h3>

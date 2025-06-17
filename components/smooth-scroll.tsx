@@ -4,6 +4,11 @@ import { useEffect } from "react"
 
 export function SmoothScroll() {
   useEffect(() => {
+    // Ensure we're in the browser environment
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return
+    }
+
     // Handle smooth scrolling for anchor links
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement

@@ -1,9 +1,9 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
-import Kaggle from "@/components/icons/kaggle.svg"
 
 import { Button } from "@/components/ui/button"
 import { ProjectCard } from "@/components/project-card"
@@ -13,6 +13,28 @@ import { ContactForm } from "@/components/contact-form"
 import { SmoothScroll } from "@/components/smooth-scroll"
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const handleExternalLink = (url: string) => {
+    if (mounted && typeof window !== 'undefined') {
+      window.open(url, "_blank")
+    }
+  }
+  const handleScrollToContact = () => {
+    if (mounted && typeof document !== 'undefined') {
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
+  const handleScrollToProjects = () => {
+    if (mounted && typeof document !== 'undefined') {
+      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
+    }
+  }
   return (
     <div className="flex min-h-screen flex-col bg-[#f4f1ea]">
       {/* Add this component at the top of the JSX */}
@@ -38,20 +60,19 @@ export default function Home() {
               Contact
             </Link>
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3">            <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => handleExternalLink("https://github.com/mhmdkardosha")}
+            className="hover:text-[#1a4b8c]"
+          >
+            <Github className="h-5 w-5" />
+            <span className="sr-only">GitHub</span>
+          </Button>
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => window.open("https://github.com/mhmdkardosha", "_blank")}
-              className="hover:text-[#1a4b8c]"
-            >
-              <Github className="h-5 w-5" />
-              <span className="sr-only">GitHub</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => window.open("https://www.linkedin.com/in/mohamed-kardosha-4b8552248/", "_blank")}
+              onClick={() => handleExternalLink("https://www.linkedin.com/in/mohamed-kardosha-4b8552248/")}
               className="hover:text-[#1a4b8c]"
             >
               <Linkedin className="h-5 w-5" />
@@ -60,24 +81,29 @@ export default function Home() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => window.open("https://www.kaggle.com/mhmdkardosha", "_blank")}
+              onClick={() => handleExternalLink("https://www.kaggle.com/mhmdkardosha")}
               className="hover:text-[#1a4b8c]"
             >
-              <Image src={Kaggle} alt="Kaggle" className="h-15 w-15 translate-y-1" />
+              <Image
+                src="/icons/kaggle.svg"
+                alt="Kaggle"
+                width={24}
+                height={24}
+                className="h-6 w-6 translate-y-1"
+              />
               <span className="sr-only">Kaggle</span>
-            </Button>
-            <Button
+            </Button>            <Button
               variant="ghost"
               size="icon"
               className="md:hidden"
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={handleScrollToContact}
             >
               <Mail className="h-5 w-5" />
               <span className="sr-only">Contact</span>
             </Button>
             <Button
               className="hidden md:flex bg-[#1a4b8c] hover:bg-[#0f3b7c] text-white"
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={handleScrollToContact}
             >
               Contact Me
             </Button>
@@ -96,15 +122,14 @@ export default function Home() {
                 Transforming complex data into actionable insights and building intelligent systems that solve
                 real-world problems.
               </p>
-              <div className="flex gap-4">
-                <Button
-                  size="lg"
-                  className="bg-[#1a4b8c] hover:bg-[#0f3b7c] text-white shadow-lg"
-                  onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-                >
-                  View Projects
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+              <div className="flex gap-4">                <Button
+                size="lg"
+                className="bg-[#1a4b8c] hover:bg-[#0f3b7c] text-white shadow-lg"
+                onClick={handleScrollToProjects}
+              >
+                View Projects
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
                 <Button
                   size="lg"
                   variant="outline"
@@ -112,8 +137,8 @@ export default function Home() {
                   onClick={() => {
                     // Create a link to download the resume
                     const link = document.createElement("a")
-                    link.href = "/Mohamed Kardosha's CV.pdf" // Path to your resume file in the public folder
-                    link.download = "Mohamed Kardosha's resume.pdf"
+                    link.href = "/Mohamed Kardosha resume.pdf" // Path to your resume file in the public folder
+                    link.download = "Mohamed Kardosha resume.pdf"
                     document.body.appendChild(link)
                     link.click()
                     document.body.removeChild(link)
@@ -124,12 +149,13 @@ export default function Home() {
               </div>
             </div>
             <div className="flex-1 flex justify-center">
-              <div className="relative w-72 h-72 rounded-full overflow-hidden border-4 border-[#d4a84f] shadow-xl">
-                <img
-                  src="/images/profile.png?height=300&width=300"
-                  alt="Mohamed Kardosha - Data Scientist Portrait"
-                  className="object-cover"
-                />
+              <div className="relative w-72 h-72 rounded-full overflow-hidden border-4 border-[#d4a84f] shadow-xl">                <Image
+                src="/images/profile.png"
+                alt="Mohamed Kardosha - Data Scientist Portrait"
+                className="object-cover"
+                width={300}
+                height={300}
+              />
               </div>
             </div>
           </div>
@@ -153,8 +179,7 @@ export default function Home() {
                   visualization. A background in computer science and statistics allows
                   problems to be approached from various perspectives.
                 </p>
-                <p className="text-lg text-gray-700">
-                  When I'm not diving into datasets, you can find me learning new laguages, mentoring
+                <p className="text-lg text-gray-700">                  When I&apos;m not diving into datasets, you can find me learning new languages, mentoring
                   aspiring data scientists, or exploring the latest advancements in AI.
                 </p>
               </div>
@@ -162,14 +187,14 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-[#1a2a47]">Experience</h3>
                 <div className="space-y-4">
                   <div className="border-l-4 border-[#d4a84f] pl-4">
-                    <h4 className="font-semibold">Head of Data Science commmitte</h4>
+                    <h4 className="font-semibold">Head of Data Science Committee</h4>
                     <p className="text-gray-600">CAT Reloaded • Oct 2024 - Present</p>
                     <p className="text-gray-700">
                       Leading a team of data scientists to develop machine learning models and data-driven solutions.
                     </p>
                   </div>
                   <div className="border-l-4 border-[#d4a84f] pl-4">
-                    <h4 className="font-semibold">Vice-head of Data Science commmitte</h4>
+                    <h4 className="font-semibold">Head of Data Science commmitte</h4>
                     <p className="text-gray-600">IEEE Mansoura Computer Society Chapter • Nov 2024 - Present</p>
                     <p className="text-gray-700">
                       Organizing workshops and events to promote data science and machine learning in the community.
@@ -235,11 +260,10 @@ export default function Home() {
               />
             </div>
             <div className="flex justify-center mt-8">
-              <Button
-                variant="outline"
+              <Button variant="outline"
                 size="lg"
                 className="border-[#d4a84f] text-[#d4a84f] hover:bg-[#d4a84f]/10"
-                onClick={() => window.open("https://www.kaggle.com/mhmdkardosha/code", "_blank")}
+                onClick={() => handleExternalLink("https://www.kaggle.com/mhmdkardosha/code")}
               >
                 View All Projects
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -266,10 +290,9 @@ export default function Home() {
           </div>
           <div className="flex gap-4">
             <Button
-              variant="ghost"
-              size="icon"
+              variant="ghost" size="icon"
               className="text-white hover:text-[#d4a84f] hover:bg-transparent"
-              onClick={() => window.open("https://github.com/mhmdkardosha", "_blank")}
+              onClick={() => handleExternalLink("https://github.com/mhmdkardosha")}
             >
               <Github className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
@@ -277,8 +300,7 @@ export default function Home() {
             <Button
               variant="ghost"
               size="icon"
-              className="text-white hover:text-[#d4a84f] hover:bg-transparent"
-              onClick={() => window.open("https://www.linkedin.com/in/mohamed-kardosha-4b8552248/", "_blank")}
+              className="text-white hover:text-[#d4a84f] hover:bg-transparent" onClick={() => handleExternalLink("https://www.linkedin.com/in/mohamed-kardosha-4b8552248/")}
             >
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
@@ -286,21 +308,21 @@ export default function Home() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => window.open("https://www.kaggle.com/mhmdkardosha", "_blank")}
+              onClick={() => handleExternalLink("https://www.kaggle.com/mhmdkardosha")}
               className="text-white hover:text-[#d4a84f] hover:bg-transparent"
-            >
-              <Image
-                src={Kaggle}
+            ><Image
+                src="/icons/kaggle.svg"
                 alt="Kaggle"
+                width={48}
+                height={48}
                 className="h-12 w-12 translate-y-1 invert brightness-0 filter"
               />
               <span className="sr-only">Kaggle</span>
             </Button>
             <Button
-              variant="ghost"
-              size="icon"
+              variant="ghost" size="icon"
               className="text-white hover:text-[#d4a84f] hover:bg-transparent"
-              onClick={() => window.open("mailto:mohamedkardosha9@gmail.com", "_blank")}
+              onClick={() => handleExternalLink("mailto:mohamedkardosha9@gmail.com")}
             >
               <Mail className="h-5 w-5" />
               <span className="sr-only">Email</span>

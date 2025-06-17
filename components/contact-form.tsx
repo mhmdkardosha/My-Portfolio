@@ -45,7 +45,7 @@ export function ContactForm() {
         throw new Error("Failed to send message")
       }
 
-      const data = await response.json()
+      await response.json()
 
       toast({
         title: "Message sent!",
@@ -59,7 +59,7 @@ export function ContactForm() {
         subject: "",
         message: "",
       })
-    } catch (error) {
+    } catch {
       toast({
         title: "Something went wrong",
         description: "Your message couldn't be sent. Please try again.",
